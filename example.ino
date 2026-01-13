@@ -1,3 +1,6 @@
+// The focus of this code is to make the continuous rotation servo motor MG996R travel an angle in degrees.
+// Contains minimal numerical and logical errors that will be fixed later.
+
 #define ServoPin 5
 #include <Servo.h>
 
@@ -5,7 +8,9 @@ Servo myServo;
 
 const float pi = 3.142;
 
-float time_period_for_one = 1.515;                       // Experiment Data
+// This represents the time it takes for the motor to travel one revolution
+const float time_period_for_one = 1.515;                 // in seconds
+// This is the angular frequency
 float w = 2 * pi / time_period_for_one;                  // Angular Frequency w = deg2rad(360) / 1.515
 
 float req_time = 0;           // Initialize required time to reach a specific angle
@@ -23,8 +28,6 @@ void setup() {
   Serial.begin(9600);
   myServo.attach(ServoPin);
 }
-
-// The reference angle is when the program starts
 
 void loop() 
 {
@@ -103,6 +106,7 @@ void CCWROT(float rad, float req_time)
 }
 
 // =============================================
+// This function helps take the motor back to the position where it started.
 void Reference(float ref, float for_ref_time)
 {
   unsigned long startTime = millis();
@@ -121,7 +125,3 @@ void Reference(float ref, float for_ref_time)
   }
   myServo.write(90);
 }
-
-/*========================Testing=========================
-
-==========================================================*/
